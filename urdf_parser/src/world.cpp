@@ -42,7 +42,7 @@
 #include <sstream>
 #include <algorithm>
 #include <tinyxml2.h>
-#include <console_bridge/console.h>
+#include <loguru.hpp>
 
 namespace urdf{
 

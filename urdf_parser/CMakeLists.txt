@@ -3,6 +3,9 @@ macro(add_urdfdom_library)
   set(multiValueArgs SOURCES LINK)
   cmake_parse_arguments(add_urdfdom_library "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
+  set(LOGURU_LIB "${CMAKE_INSTALL_PREFIX}/lib")
+	find_library(LOGURU_FOUND loguru HINTS ${LOGURU_LIB} REQUIRED)
+
   add_library(${add_urdfdom_library_LIBNAME} SHARED
     ${add_urdfdom_library_SOURCES})
   add_library(urdfdom::${add_urdfdom_library_LIBNAME} ALIAS ${add_urdfdom_library_LIBNAME})
@@ -12,9 +15,9 @@ macro(add_urdfdom_library)
   target_link_libraries(${add_urdfdom_library_LIBNAME} PUBLIC
     ${add_urdfdom_library_LINK}
     ${urdfdom_headers_link_libs}
+    ${LOGURU_FOUND}
   )
   target_link_libraries(${add_urdfdom_library_LIBNAME} PRIVATE
-    ${console_bridge_link_libs}
     tinyxml2::tinyxml2
   )
   if(NOT CMAKE_CXX_STANDARD)
@@ -24,12 +27,6 @@ macro(add_urdfdom_library)
     DEFINE_SYMBOL URDFDOM_EXPORTS
     SOVERSION ${URDF_MAJOR_MINOR_VERSION})
 endmacro()
-
-if(TARGET console_bridge::console_bridge)
-  set(console_bridge_link_libs "console_bridge::console_bridge")
-else()
-  set(console_bridge_link_libs "console_bridge")
-endif()
 
 if(TARGET urdfdom_headers::urdfdom_headers)
   set(urdfdom_headers_link_libs "urdfdom_headers::urdfdom_headers")

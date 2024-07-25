@@ -44,7 +44,7 @@
 #include <string>
 #include <algorithm>
 #include <tinyxml2.h>
-#include <console_bridge/console.h>
+#include <loguru.hpp>
 
 #include <urdf_parser/urdf_parser.h>
 namespace urdf{
@@ -56,7 +56,7 @@ bool parseModelState(ModelState &ms, tinyxml2::XMLElement* config)
   const char *name_char = config->Attribute("name");
   if (!name_char)
   {
-    CONSOLE_BRIDGE_logError("No name given for the model_state.");
+    LOG_F(ERROR, "No name given for the model_state.");
     return false;
   }
   ms.name = std::string(name_char);
@@ -67,7 +67,7 @@ bool parseModelState(ModelState &ms, tinyxml2::XMLElement* config)
     try {
       ms.time_stamp.set(strToDouble(time_stamp_char));
     } catch(std::runtime_error &) {
-      CONSOLE_BRIDGE_logError("Parsing time stamp [%s] failed", time_stamp_char);
+      LOG_F(ERROR, "Parsing time stamp [%s] failed", time_stamp_char);
       return false;
     }
   }
@@ -83,7 +83,7 @@ bool parseModelState(ModelState &ms, tinyxml2::XMLElement* config)
       joint_state->joint = std::string(joint_char);
     else
     {
-      CONSOLE_BRIDGE_logError("No joint name given for the model_state.");
+      LOG_F(ERROR, "No joint name given for the model_state.");
       return false;
     }
 

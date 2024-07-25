@@ -39,7 +39,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-#include <console_bridge/console.h>
+#include <loguru.hpp>
 #include <tinyxml2.h>
 #include <urdf_parser/urdf_parser.h>
 
@@ -101,7 +101,7 @@ bool parsePoseInternal(Pose &pose, tinyxml2::XMLElement* xml)
         pose.position.init(xyz_str);
       }
       catch (ParseError &e) {
-        CONSOLE_BRIDGE_logError(e.what());
+        LOG_F(ERROR, e.what());
         return false;
       }
     }
@@ -113,7 +113,7 @@ bool parsePoseInternal(Pose &pose, tinyxml2::XMLElement* xml)
         pose.rotation.init(rpy_str);
       }
       catch (ParseError &e) {
-        CONSOLE_BRIDGE_logError(e.what());
+        LOG_F(ERROR, e.what());
         return false;
       }
     }
