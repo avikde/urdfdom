@@ -17,6 +17,8 @@ macro(add_urdfdom_library)
     ${add_urdfdom_library_LINK}
     ${urdfdom_headers_link_libs}
     ${LOGURU_FOUND}
+    dl
+    pthread
   )
   target_link_libraries(${add_urdfdom_library_LIBNAME} PRIVATE
     tinyxml2::tinyxml2
