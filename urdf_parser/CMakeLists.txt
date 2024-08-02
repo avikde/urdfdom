@@ -5,6 +5,7 @@ macro(add_urdfdom_library)
 
   set(LOGURU_LIB "${CMAKE_INSTALL_PREFIX}/lib")
 	find_library(LOGURU_FOUND loguru HINTS ${LOGURU_LIB} REQUIRED)
+  find_package(Threads)
 
   add_library(${add_urdfdom_library_LIBNAME} SHARED
     ${add_urdfdom_library_SOURCES})
@@ -17,9 +18,11 @@ macro(add_urdfdom_library)
     ${add_urdfdom_library_LINK}
     ${urdfdom_headers_link_libs}
     ${LOGURU_FOUND}
-    dl
-    pthread
+    Threads::Threads
   )
+  if (UNIX)
+    target_link_libraries(${add_urdfdom_library_LIBNAME} PUBLIC dl)
+  endif(UNIX)
   target_link_libraries(${add_urdfdom_library_LIBNAME} PRIVATE
     tinyxml2::tinyxml2
   )
