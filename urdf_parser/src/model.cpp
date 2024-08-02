@@ -53,7 +53,7 @@ ModelInterfaceSharedPtr  parseURDFFile(const std::string &path)
     std::ifstream stream( path.c_str() );
     if (!stream)
     {
-      LOG_F(ERROR, ("File " + path + " does not exist").c_str());
+      LOG_F(ERROR, "File %s does not exist", path.c_str());
       return ModelInterfaceSharedPtr();
     }
 
@@ -98,7 +98,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
   xml_doc.Parse(xml_string.c_str());
   if (xml_doc.Error())
   {
-    LOG_F(ERROR, xml_doc.ErrorStr());
+    LOG_F(ERROR, "%s", xml_doc.ErrorStr());
     xml_doc.ClearError();
     model.reset();
     return model;
@@ -132,7 +132,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
   }
   catch (const std::runtime_error & err)
   {
-    LOG_F(ERROR, err.what());
+    LOG_F(ERROR, "%s", err.what());
     model.reset();
     return model;
   }
