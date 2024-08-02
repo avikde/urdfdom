@@ -101,7 +101,7 @@ bool parsePoseInternal(Pose &pose, tinyxml2::XMLElement* xml)
         pose.position.init(xyz_str);
       }
       catch (ParseError &e) {
-        LOG_F(ERROR, e.what());
+        LOG_F(ERROR, "%s", e.what());
         return false;
       }
     }
@@ -113,7 +113,7 @@ bool parsePoseInternal(Pose &pose, tinyxml2::XMLElement* xml)
         pose.rotation.init(rpy_str);
       }
       catch (ParseError &e) {
-        LOG_F(ERROR, e.what());
+        LOG_F(ERROR, "%s", e.what());
         return false;
       }
     }
